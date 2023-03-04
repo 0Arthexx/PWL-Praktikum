@@ -11,50 +11,51 @@
 
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
-    <div class="container-fluid m-2">
-        <h3>
-            <a class="nav-link active" aria-current="page" href="#">Pertemuan 1 & 2</a>
-        </h3>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fs-5">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="?menu=home"> Home </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="?menu=genre"> Genre </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="?menu=book"> Book </a>
-                </li>
-            </ul>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+        <div class="container-fluid m-2">
+            <h3>
+                <a class="nav-link active" aria-current="page" href="#">Pertemuan 1 & 2</a>
+            </h3>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fs-5">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="?menu=home"> Home </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="?menu=genre"> Genre </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="?menu=book"> Book </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
 
 
-        <main>
-            <?php
-            $navigation = filter_input(INPUT_GET, 'menu');
-            switch ($navigation) {
-                case 'home':
-                    include_once 'home.php';
-                    break;
-                case 'genre':
-                    include_once 'genre.php';
-                    break;
-                case 'book':
-                    break;
-                default:
-                    include_once 'home.php';
+    <main>
+        <?php
+        $navigation = filter_input(INPUT_GET, var_name: 'menu');
+        switch ($navigation) {
+            case 'home':
+                include_once 'home.php';
+                break;
+            case 'genre':
+                include_once 'genre.php';
+                break;
+            case 'book':
+                include 'book.php';
+                break;
+            default:
+                include_once 'home.php';
+                break;
             }
-
             ?>
-        </main>
+    </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
