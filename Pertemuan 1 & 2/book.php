@@ -1,5 +1,5 @@
 <?php
-$link = new PDO('mysql:host=localhost;dbname=pwl2022', 'root', 'Jalankatunen01*');
+$link = new PDO('mysql:host=localhost;dbname=pwl2022', 'root', '');
 $link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $link->setAttribute(PDO::ATTR_AUTOCOMMIT, false);
 $query = 'SELECT isbn, title, author, publisher, publisher_year, genre_id FROM book';
@@ -8,8 +8,13 @@ $stmt->execute();
 $results = $stmt->fetchAll();
 $link = null;
 ?>
+<style>
+    tr {
+        background-color: #FFDD59;
+    }
+</style>
 
-<div class="container ">
+<div class="container mt-5 ">
     <table class="table mt-3 text-center" id="example">
         <thead>
         <tr>
