@@ -15,7 +15,7 @@ $link = null;
 </style>
 
 <div class="container mt-5 ">
-    <table class="table mt-3 text-center" id="example">
+    <table class="table mt-3 text-center" id="table">
         <thead>
         <tr>
             <th class="text-center">ID</th>
