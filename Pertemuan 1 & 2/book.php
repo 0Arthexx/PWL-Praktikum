@@ -1,8 +1,9 @@
 <?php
-$link = new PDO('mysql:host=localhost;dbname=pwl2022', 'root', '');
+$link = new PDO('mysql:host=localhost;dbname=pwl2022', 'root', 'Jalankatunen01*');
 $link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $link->setAttribute(PDO::ATTR_AUTOCOMMIT, false);
-$query = 'SELECT isbn, title, author, publisher, publisher_year, genre_id FROM book';
+//$query = 'SELECT isbn, title, author, publisher, publisher_year, short_description, genre_id FROM book';
+$query = 'SELECT b.isbn, b.title, b.author, b.publisher, b.publisher_year, b.short_description, g.name FROM book b JOIN genre g ON b.genre_id = g.id';
 $stmt = $link->prepare($query);
 $stmt->execute();
 $results = $stmt->fetchAll();
@@ -23,6 +24,7 @@ $link = null;
             <th class="text-center">Author</th>
             <th class="text-center">Publisher</th>
             <th class="text-center">Publisher Year</th>
+            <th class="text-center">Short Description</th>
             <th class="text-center">Genre ID</th>
         </tr>
         </thead>
@@ -35,7 +37,8 @@ $link = null;
             echo '<td>' . $book['author'] . '</td>';
             echo '<td>' . $book['publisher'] . '</td>';
             echo '<td>' . $book['publisher_year'] . '</td>';
-            echo '<td>' . $book['genre_id'] . '</td>';
+            echo '<td>' . $book['short_description'] . '</td>';
+            echo '<td>' . $book['name'] . '</td>';
             echo '</tr>';
         }
         ?>
