@@ -1,7 +1,27 @@
 <?php
-$link = new PDO('mysql:host=localhost;dbname=pwl2022', 'root', 'Jalankatunen01*');
-$link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$link->setAttribute(PDO::ATTR_AUTOCOMMIT, false);
+$submitPressed = filter_input(INPUT_POST, 'btnSave');
+if (isset($submitPressed)) {
+    $name = filter_input(INPUT_POST, 'txtName');
+    if (trim($name) == ''){
+        echo '<div> Please Provid with a valid name </div>';
+    } else {
+        $link = createMySqlConnection();
+        $link->beginTransaction();
+        $query = 'INSERT INTO genre(name) VALUES (?)';
+//        $query = 'INSERT INTO othertable(cola, colb) VALUES (?, ?)';
+        $stmt = $link -> prepare ($query);
+        $stmt -> bindParam(1, $name);
+//        $stmt -> bindParam(2, $name);
+        if ($stmt -> execute()) {
+            $link -> commit();
+        } else {
+            $link -> rollBack();
+        }
+        $link = null;
+    }
+}
+
+$link = createMySqlConnection();
 $query = 'SELECT id, name FROM genre';
 $stmt = $link->prepare($query);
 $stmt->execute();
@@ -13,6 +33,12 @@ $link = null;
         background-color: #FFDD59;
     }
 </style>
+
+<form method="post" action="">
+    <label for="txtName">Genre Name</label>
+    <input type="text" maxlength="45" placeholder="Genre Name" required autofocus name="txtName"id="txtName">
+    <input type="submit" value="save Data" name="btnSave">
+</form>
 
 <div class="container mt-5 ">
     <table class="table mt-3 text-center" id="table">
