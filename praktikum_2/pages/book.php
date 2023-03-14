@@ -20,7 +20,7 @@ if (isset($submitPressed)) {
     $shortdesc = filter_input(INPUT_POST, 'txtShortDescription');
     $genrename = filter_input(INPUT_POST, 'genreName');
 
-    if (trim($isbn) == ''){
+    if (trim($isbn) == '' || trim($title) == '' || trim($author) == '' || trim($publisher) == '' || trim($publisheryear) == '' || trim($shortdesc) == '' || trim($genrename) == ''){
         echo '<div> Please Provid with a valid name </div>';
     } else {
         $results = addNewBook($isbn, $title, $author, $publisher, $publisheryear, $shortdesc, $genrename);

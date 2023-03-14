@@ -70,6 +70,8 @@ include_once 'db_utility/book_function.php';
                 break;
             case 'genre_update':
                 include_once 'pages/genre_edit.php';
+            case 'book_update':
+                include_once 'pages/book_edit.php';
             default:
                 include_once 'pages/home.php';
                 break;

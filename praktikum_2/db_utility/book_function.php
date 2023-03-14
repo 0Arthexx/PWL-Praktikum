@@ -39,9 +39,21 @@ function addNewBook($newIsbn, $newTittle, $newAuthor, $newPublisher, $newPublish
 function fetchOneBook($isbn)
 {
     $link = createMySQLConnection();
-    $query = 'SELECT isbn, title, author, publisher, publisher_year, short_description, genre_id FROM book WHERE isbn = ?';
+    $query = 'SELECT * FROM book WHERE isbn = ?';
     $stmt = $link->prepare($query);
     $stmt->bindParam(1, $isbn);
+    $stmt->execute();
+    $results = $stmt->fetch();
+    $link = null;
+    return $results;
+}
+
+function fetchOneGenreName($isbn)
+{
+    $link = createMySQLConnection();
+    $query = 'SELECT genre.name FROM book INNER JOIN genre ON book.genre_id = genre.id WHERE isbn = ?';
+    $stmt = $link -> prepare($query);
+    $stmt -> bindParam(1, $isbn);
     $stmt->execute();
     $results = $stmt->fetch();
     $link = null;

@@ -2,15 +2,27 @@
 $editedIsbn = filter_input(INPUT_GET, 'bisbn');
 if (isset($editedIsbn)) {
     $book = fetchOneBook($editedIsbn);
+    $genreName = fetchOneGenreName($editedIsbn);
 }
 
 $updatePressed = filter_input(INPUT_POST, 'btnUpdate');
 if (isset($updatePressed)) {
     $isbn = filter_input(INPUT_POST, 'txtISBN');
+    $title = filter_input(INPUT_POST, 'txtTittle');
+    $author = filter_input(INPUT_POST, 'txtAuthor');
+    $publisher = filter_input(INPUT_POST, 'txtPublisher');
+    $publisheryear = filter_input(INPUT_POST, 'txtPublisherYear');
+    $shortdesc = filter_input(INPUT_POST, 'txtShortDescription');
+    $genrename = filter_input(INPUT_POST, 'genreName');
+
+    if (trim($isbn) == '' || trim($title) == '' || trim($author) == '' || trim($publisher) == '' || trim($publisheryear) == '' || trim($shortdesc) == '' || trim($genrename) == '') {
+        echo '<div> Please Provid with a valid name </div>';
+    }
+
     if (trim($isbn) == '') {
         echo '<div>Please fill update genre name</div>';
     } else {
-        $result = updateGenreToDb($book['isbn'], $isbn);
+        $result = updateBookToDb($book['isbn'], $title, $author, $publisher, $publisheryear, $shortdesc, $genrename);
         if ($result) {
             header('location:index.php?menu=book');
         } else {
@@ -28,7 +40,7 @@ if (isset($updatePressed)) {
                 <h6>BOOK ISBN</h6>
             </label>
             <div class="">
-                <input type="text" maxlength="45" placeholder="Book ISBN" readonly name="txtISBN" id="txtISBN" class="form-control" value="<?php echo $book['isbn'];?>">
+                <input type="text" name="txtISBN" id="txtISBN" class="form-control" value="<?php echo $book['isbn'];?>" readonly>
             </div>
         </div>
 
@@ -83,7 +95,7 @@ if (isset($updatePressed)) {
             </label>
             <div class="">
                 <select required autofocus name="genreName" id="genreName">
-                    <option value="<?php echo $book['genre_id'];?>"></option>
+                    <option value="<?php echo $book['genre_id']; ?>" selected><?php echo $genreName['name']; ?></option>
                     <?php
                     $resultgenre = fetchGenreFromDb();
                     foreach ($resultgenre as $genre) {

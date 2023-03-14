@@ -5,6 +5,6 @@ function editGenre(genreId) {
 function deleteGenre(genreId) {
     const confirmation = window.confirm("Are you sure want to delete this data?")
     if (confirmation) {
-        window.location = "index.php?menu=genre&cmd=del&gid=" + genreId;
+        window.location = "index.php?menu=genre&cmd=del&txtISBN=" + genreId;
     }
 }
