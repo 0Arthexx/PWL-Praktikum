@@ -147,8 +147,8 @@ if (isset($submitPressed)) {
             echo '<td>' . $book['short_description'] . '</td>';
             echo '<td>' . $book['name'] . '</td>';
             echo '<td>
-<button onclick="editBook (' . $book['isbn'] . ')" class="btn btn-warning mb-2">Edit Book</button>
-<button onclick="deleteBook (' . $book['isbn'] . ')" class="btn btn-danger">Delete Book</button>
+<button onclick="editBook(\'' . $book['isbn'] . '\')" class="btn btn-warning mb-2">Edit Book</button>
+<button onclick="deleteBook(\'' . $book['isbn'] . '\')" class="btn btn-danger">Delete Book</button>
 </td>';
             echo '</tr>';
         }

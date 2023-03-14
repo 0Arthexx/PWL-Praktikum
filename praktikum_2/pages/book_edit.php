@@ -15,12 +15,8 @@ if (isset($updatePressed)) {
     $shortdesc = filter_input(INPUT_POST, 'txtShortDescription');
     $genrename = filter_input(INPUT_POST, 'genreName');
 
-    if (trim($isbn) == '' || trim($title) == '' || trim($author) == '' || trim($publisher) == '' || trim($publisheryear) == '' || trim($shortdesc) == '' || trim($genrename) == '') {
+    if (trim($isbn) == ' ' || trim($title) == ' ' || trim($author) == ' ' || trim($publisher) == ' ' || trim($publisheryear) == ' ' || trim($shortdesc) == ' ' || trim($genrename) == ' ') {
         echo '<div> Please Provid with a valid name </div>';
-    }
-
-    if (trim($isbn) == '') {
-        echo '<div>Please fill update genre name</div>';
     } else {
         $result = updateBookToDb($book['isbn'], $title, $author, $publisher, $publisheryear, $shortdesc, $genrename);
         if ($result) {
