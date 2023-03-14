@@ -1,5 +1,5 @@
 function editBook(bookIsbn) {
-    window.location = "index.php?menu=book_update&bisbn= " + bookIsbn;
+    window.location = "index.php?menu=book_update&bisbn=" + bookIsbn;
 }
 
 function deleteBook(bookIsbn) {

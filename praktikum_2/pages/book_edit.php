@@ -81,7 +81,7 @@ if (isset($updatePressed)) {
                 <h6>SHORT DESCRIPTION</h6>
             </label>
             <div class="">
-                <textarea name="txtShortDescription" id="txtShortDescription" cols="50" rows="3" class="form-control" required autofocus value="<?php echo $book['short_description'];?>"></textarea>
+                <textarea name="txtShortDescription" id="txtShortDescription" cols="50" rows="3" class="form-control" required autofocus><?php echo $book['short_description'];?></textarea>
             </div>
         </div>
 
