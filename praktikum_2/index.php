@@ -1,7 +1,12 @@
 <?php
+session_start();
+if (!isset($_SESSION['registered_user'])) {
+    $_SESSION['registered_user'] = false;
+}
 include_once 'db_utility/util_function.php';
 include_once 'db_utility/genre_function.php';
 include_once 'db_utility/book_function.php';
+include_once 'db_utility/user_function.php';
 ?>
 
 <!doctype html>
@@ -14,7 +19,7 @@ include_once 'db_utility/book_function.php';
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap5.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <style>
@@ -32,6 +37,9 @@ include_once 'db_utility/book_function.php';
 
     </style>
 
+    <?php
+    if ($_SESSION['registered_user']) {
+    ?>
     <nav class="navbar navbar-expand-lg sticky-top warna">
         <div class="container-fluid m-2">
             <img src="./src/logofixed.png" alt="" width="50">
@@ -49,6 +57,12 @@ include_once 'db_utility/book_function.php';
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="?menu=book"> Book </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="?menu=login"> Login </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="?menu=logout"> Logout </a>
                     </li>
                 </ul>
             </div>
@@ -72,12 +86,24 @@ include_once 'db_utility/book_function.php';
                 include_once 'pages/genre_edit.php';
             case 'book_update':
                 include_once 'pages/book_edit.php';
+            case 'login':
+                include_once 'pages/login.php';
+            case 'logout':
+                session_unset();
+                session_destroy();
+                header('location:index.php');
+                break;
             default:
                 include_once 'pages/home.php';
                 break;
             }
             ?>
     </main>
+    <?php
+    } else {
+        include_once 'pages/login.php';
+    }
+    ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
