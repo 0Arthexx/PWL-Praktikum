@@ -57,6 +57,7 @@
         }
     }
 ?>
+
 <div class="container" style="height:auto">
    <div class="row d-flex text-start justify-content-center my-3">
         <div class="col-md-6">
@@ -79,7 +80,7 @@
             </div>
             <div class="mb-3">
                 <label for="pubYear" class="form-label">Year Published</label>
-                <input type="number" class="form-control" name="yearPublished" id="pubYear"  required autofocus value="<?php echo($book['publish_year']); ?>" placeholder="Year Published">
+                <input type="number" class="form-control" name="yearPublished" id="pubYear"  required autofocus value="<?php echo($book['year_published']); ?>" placeholder="Publish Year">
             </div>
             <div class="mb-3">
                 <label for="shortDesc" class="form-label">Short Description</label>
@@ -121,15 +122,10 @@
                                 <input type="file" class="form-control my-3" name="txtFile" accept="image/jpg">
                             </div>
                             <button type="submit" class="btn btn-dark w-100 text-warning" name="coverUpload">Change Cover</button>
-
                         </form>
                     </div>
-
-
                 </div>
             </div>
         </div>
-        
-       
     </div>
 </div>

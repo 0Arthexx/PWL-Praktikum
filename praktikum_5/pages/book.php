@@ -78,7 +78,7 @@ if(isset($submitPressed)){
         <div class="row mt-2">
             <label for="pubYear" class="form-label">Year Published</label>
             <div class="">
-                <input type="number" class="form-control" name="yearPublished" id="pubYear"  required autofocus placeholder="Year Published">
+                <input type="number" class="form-control" name="yearPublished" id="pubYear"  required autofocus placeholder="Publish Year">
             </div>
         </div>
 
@@ -113,9 +113,7 @@ if(isset($submitPressed)){
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary w-100" name="btnSave">Save Data</button>
-
         </div>
-
     </form>
 </div>
 
@@ -128,7 +126,7 @@ if(isset($submitPressed)){
             <th class="text-center">Title</th>
             <th class="text-center">Author</th>
             <th class="text-center">Publisher</th>
-            <th class="text-center">Year Published</th>
+            <th class="text-center">Publisher Year</th>
             <th class="text-center">Short Description</th>
             <th class="text-center">Genre Name</th>
             <th class="text-center">Action</th>
@@ -149,7 +147,7 @@ if(isset($submitPressed)){
             echo '<td >'. $book['title'] . '</td>';
             echo '<td>'. $book['author'] . '</td>';
             echo '<td>'. $book['publisher'] . '</td>';
-            echo '<td>'. $book['publish_year'] . '</td>';
+            echo '<td>'. $book['year_published'] . '</td>';
             echo '<td>' . $book['short_description'] . '</td>';
             echo '<td>' . $book['name'] . '</td>';
             echo '<td>
