@@ -1,9 +1,9 @@
 <?php
-$deleteCommand = filter_input(INPUT_GET, 'cmd');
-if (isset($deleteCommand) && $deleteCommand == 'del') {
-    $genreId = filter_input(INPUT_GET, 'gid');
-    $result = deleteGenreFromDb($genreId);
-    if ($result) {
+$deleteCommand = filter_input(INPUT_GET,'cmd');
+if(isset($deleteCommand) && $deleteCommand = 'del'){
+    $genreId = filter_input(INPUT_GET,'gid');
+    $results = deleteGenreFromDb($genreId);
+    if ($results) {
         echo '<div>Data successfully removed</div>';
     } else {
         echo '<div>Failed to remove data</div>';
@@ -33,7 +33,6 @@ if (isset($submitPressed)) {
 </style>
 
 <div class="container mt-5 ">
-
     <form method="post">
         <div class="row mt-2">
             <label for="txtName" class="col-sm-3 col-form-label">
@@ -43,12 +42,10 @@ if (isset($submitPressed)) {
                 <input type="text" maxlength="45" placeholder="Genre Name" required autofocus name="txtName" id="txtName" class="form-control">
             </div>
         </div>
-
         <div class="row mt-4 mb-5">
             <input type="submit" value="Save Data" name="btnSave" class="btn btn-primary">
         </div>
     </form>
-
     <table class="table mt-3 text-center" id="table">
         <thead>
         <tr>
@@ -75,6 +72,4 @@ if (isset($submitPressed)) {
     </table>
 </div>
 
-<script src="js/genre_index.js">
-
-</script>
+<script src="js/genre_index.js"></script>

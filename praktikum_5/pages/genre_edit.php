@@ -1,45 +1,46 @@
-<?php
-$editedId = filter_input(INPUT_GET, 'gid');
-if (isset($editedId)) {
-    $genre = fetchOneGenre($editedId);
-}
-
-$updatePressed = filter_input(INPUT_POST, 'btnUpdate');
-if (isset($updatePressed)) {
-    $name = filter_input(INPUT_POST, 'txtName');
-    if (trim($name) == '') {
-        echo '<div>Please fill update genre name</div>';
-    } else {
-        $result = updateGenreToDb($genre['id'], $name);
-        if ($result) {
-            header('location:index.php?menu=genre');
-        } else {
-            echo '<div>Failed to update data</div>';
+<?php 
+    $editedId = filter_input(INPUT_GET,'gid');
+    if(isset($editedId)){
+        $genre = fetchOneGenre($editedId);
+    }
+    $updatePressed = filter_input(INPUT_POST,'btnUpdate');
+    if(isset($updatePressed)){
+        $name = filter_input(INPUT_POST,'textName');
+        if(trim($name) == ''){
+            echo '
+            <div class="text-center">
+                Please provide with a valid name
+            </div>
+            ';
+        }else{
+            $results = updateGenreToDb($genre['id'],$name);
+            if($results){
+                header('location:index.php?menu=genre');
+            }else{
+                echo '
+                <div>
+                    Failed to add data
+                </div>
+            ';
+            }
         }
     }
-}
 ?>
 
-<form method="post" class="container">
-    <div class="row">
-        <label for="txtName" class="col-sm-3 col-form-label">
-            <h6>GENRE ID</h6>
-        </label>
-        <div class="">
-            <input type="text" placeholder="Genre ID" readonly name="txtId" id="txtId" class="form-control" value="<?php echo $genre['id'];?>">
+<div class="container" style="height:100vh">
+   <div class="row d-flex text-start justify-content-center my-3">
+        <div class="col-md-6">
+            <form method="post">
+            <div class="mb-3">
+                    <label for="idGenre" class="form-label">Genre ID</label>
+                    <input type="text" class="form-control" id="idGenre" maxlength="45"   placeholder="Genre ID" readonly value="<?php echo($genre['id']); ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="namaGenre" class="form-label">Genre Name</label>
+                    <input type="text" class="form-control" name="textName" id="namaGenre" maxlength="45" required autofocus value="<?php echo($genre['name']); ?>" placeholder="Genre Name">
+                </div>
+                <button type="submit" class="btn btn-primary" name="btnUpdate">Update Data</button>
+            </form>
         </div>
     </div>
-
-    <div class="row mt-2">
-        <label for="txtName" class="col-sm-3 col-form-label">
-            <h6>GENRE NAME</h6>
-        </label>
-        <div class="">
-            <input type="text" maxlength="45" placeholder="Genre Name" name="txtName" id="txtName" class="form-control" required autofocus value="<?php echo $genre['name'];?>">
-        </div>
-    </div>
-
-    <div class="row mt-4 mb-5">
-        <input type="submit" value="Update Data" name="btnUpdate" class="btn btn-primary">
-    </div>
-</form>
+</div>

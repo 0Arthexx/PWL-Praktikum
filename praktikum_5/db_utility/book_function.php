@@ -1,103 +1,138 @@
-<?php
-function fetchBookFromDb()
-{
-    $link = createMySQLConnection();
-    $query = 'SELECT b.isbn, b.title, b.author, b.publisher, b.publisher_year, b.short_description, g.name FROM book b JOIN genre g ON b.genre_id = g.id';
-    $stmt = $link->prepare($query);
-    $stmt->execute();
-    $results = $stmt->fetchAll();
-    $link = null;
-    return $results;
-}
-
-function addNewBook($newIsbn, $newTittle, $newAuthor, $newPublisher, $newPublisherYear, $newDescription, $newGenre)
-{
-    $result = 0;
-    $link = createMySQLConnection();
-    $link->beginTransaction();
-    $query = 'INSERT INTO book(isbn, title, author, publisher, publisher_year, short_description, genre_id) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    $stmt = $link->prepare($query);
-
-    $stmt->bindParam(1, $newIsbn);
-    $stmt->bindParam(2, $newTittle);
-    $stmt->bindParam(3, $newAuthor);
-    $stmt->bindParam(4, $newPublisher);
-    $stmt->bindParam(5, $newPublisherYear);
-    $stmt->bindParam(6, $newDescription);
-    $stmt->bindParam(7, $newGenre);
-
-    if ($stmt->execute()) {
-        $link->commit();
-        $result = 1;
-    } else {
-        $link->rollBack();
+<?php 
+    function fetchJoinFromDb(){
+        $link = createMySQLConnection();
+        $query = 'SELECT b.isbn, b.cover, b.title, b.author, b.publisher, b.publish_year, b.short_description, g.name FROM book b JOIN genre g ON b.genre_id = g.id';
+        $stmt = $link->prepare($query);
+        $stmt->execute();
+        $results = $stmt->fetchAll();
+        $link = null;
+        return $results;
     }
-    $link = null;
-    return $result;
-}
-
-function fetchOneBook($isbn)
-{
-    $link = createMySQLConnection();
-    $query = 'SELECT * FROM book WHERE isbn = ?';
-    $stmt = $link->prepare($query);
-    $stmt->bindParam(1, $isbn);
-    $stmt->execute();
-    $results = $stmt->fetch();
-    $link = null;
-    return $results;
-}
-
-function fetchOneGenreName($isbn)
-{
-    $link = createMySQLConnection();
-    $query = 'SELECT genre.name FROM book INNER JOIN genre ON book.genre_id = genre.id WHERE isbn = ?';
-    $stmt = $link -> prepare($query);
-    $stmt -> bindParam(1, $isbn);
-    $stmt->execute();
-    $results = $stmt->fetch();
-    $link = null;
-    return $results;
-}
-
-function deleteBookFromDb($isbn)
-{
-    $result = 0;
-    $link = createMySQLConnection();
-    $link->beginTransaction();
-    $query = 'DELETE FROM book WHERE isbn = ?';
-    $stmt = $link->prepare($query);
-    $stmt->bindParam(1, $isbn);
-    if ($stmt->execute()) {
-        $link->commit();
-        $result = 1;
-    } else {
-        $link->rollBack();
+    function fetchBookFromDb(){
+        $link = createMySQLConnection();
+        $query = "SELECT id,name FROM genre WHERE id = ?";
+        $stmt = $link->prepare($query);
+        $stmt->execute();
+        $result2 = $stmt->fetchAll();
+        $link =null;
+        return $result2;
     }
-    $link = null;
-    return $result;
-}
-
-function updateBookToDb($isbn, $newTitle, $newAuthor, $newPublisher, $newPublisherYear, $newDescription, $newGenre)
-{
-    $result = 0;
-    $link = createMySQLConnection();
-    $link->beginTransaction();
-    $query = 'UPDATE book SET title = ?, author = ?, publisher = ?, publisher_year = ?, short_description = ?, genre_id = ? WHERE isbn = ?';
-    $stmt = $link->prepare($query);
-    $stmt->bindParam(1, $newTitle);
-    $stmt->bindParam(2, $newAuthor);
-    $stmt->bindParam(3, $newPublisher);
-    $stmt->bindParam(4, $newPublisherYear);
-    $stmt->bindParam(5, $newDescription);
-    $stmt->bindParam(6, $newGenre);
-    $stmt->bindParam(7, $isbn);
-    if ($stmt->execute()) {
-        $link->commit();
-        $result = 1;
-    } else {
-        $link->rollBack();
+    function fetchBook2FromDb($editedISBN){
+        $link = createMySQLConnection();
+        $query = "SELECT * FROM genre WHERE ";
+        $stmt = $link->prepare($query);
+        $stmt->execute();
+        $result2 = $stmt->fetchAll();
+        $link =null;
+        return $result2;
     }
-    $link = null;
-    return $result;
-}
+    function fetchOneBook($isbn){
+        $link = createMySQLConnection();
+        $query = "SELECT ISBN,cover,title,author,publisher,publish_year,short_description,genre_id  FROM book WHERE ISBN = ?;";
+        $stmt = $link->prepare($query);
+        $stmt->bindParam(1,$isbn);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        $link =null;
+        return $result;
+    }
+    function fetchJoinFromDb2(){
+        $link = createMySQLConnection();
+        $query = "SELECT ISBN,cover,title,author,publisher,publish_year,genre.name AS 'nama_genre' FROM book INNER JOIN genre WHERE book.genre_id = genre.id AND ISBN = ?;";
+        $stmt = $link->prepare($query);
+        $stmt->bindParam(1,$isbna);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        $link =null;
+        return $result;
+    }
+    function fetchOneBook2(){
+        $link = createMySQLConnection();
+        $query = "SELECT COUNT(ISBN) as Total FROM book ";
+        $stmt = $link->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        $link =null;
+        return $result;
+    }
+    function addNewBook($newISBN,$newTitle,$newAuthor,$newPublisher,$newPublishYear,$newShortDescription,$newGenreId): int{
+        $result = 0;
+        $link = createMySQLConnection();
+        $link -> beginTransaction();
+        $query = 'INSERT INTO book(ISBN,title,author,publisher,publish_year,short_description,genre_id) VALUES (?,?,?,?,?,?,?)';
+        $stmt = $link->prepare($query);
+        $stmt->bindParam(1,$newISBN,PDO::PARAM_STR);
+        $stmt->bindParam(2,$newTitle,PDO::PARAM_STR);
+        $stmt->bindParam(3,$newAuthor,PDO::PARAM_STR);
+        $stmt->bindParam(4,$newPublisher,PDO::PARAM_STR);
+        $stmt->bindParam(5,$newPublishYear,PDO::PARAM_INT);
+        $stmt->bindParam(6,$newShortDescription,PDO::PARAM_STR);
+        $stmt->bindParam(7,$newGenreId,PDO::PARAM_INT);
+        if($stmt->execute()){
+            $link -> commit();
+            $result = 1;
+        }else{
+            $link -> rollBack();
+        }
+        $link =null;
+        return $result;
+    }
+    function updateBookToDb($ISBN,$newTitle,$newAuthor,$newPublisher,$newPublishYear,$newShortDescription,$newGenreId){
+        $result = 0;
+        $link = createMySQLConnection();
+        $link -> beginTransaction();
+        $query = 'UPDATE book SET title = ?,author = ?,publisher = ?,publish_year = ?,short_description = ?,genre_id = ? WHERE ISBN = ?';
+        $stmt = $link->prepare($query);
+        $stmt->bindParam(1,$newTitle,PDO::PARAM_STR);
+        $stmt->bindParam(2,$newAuthor,PDO::PARAM_STR);
+        $stmt->bindParam(3,$newPublisher,PDO::PARAM_STR);
+        $stmt->bindParam(4,$newPublishYear,PDO::PARAM_INT);
+        $stmt->bindParam(5,$newShortDescription,PDO::PARAM_STR);
+        $stmt->bindParam(6,$newGenreId,PDO::PARAM_INT);
+        $stmt->bindParam(7,$ISBN,PDO::PARAM_STR);
+        if($stmt->execute()){
+            $link -> commit();
+            $result = 1;
+        }else{
+            $link -> rollBack();
+        }
+        $link =null;
+        return $result;
+    }
+    
+    function updateCoverToDb($isbn, $cover){
+        $result = 0;
+        $link = createMySQLConnection();
+        $link -> beginTransaction();
+        $query = 'UPDATE book SET cover= ? WHERE ISBN = ?';
+        $stmt = $link->prepare($query);
+        $stmt->bindParam(1,$cover,PDO::PARAM_STR);
+        $stmt->bindParam(2,$isbn,PDO::PARAM_STR);
+        if($stmt->execute()){
+            $link -> commit();
+            $result = 1;
+        }else{
+            $link -> rollBack();
+        }
+        $link =null;
+        return $result;
+    }
+
+
+    function deleteBookFromDb($isbn){
+        $result = 0;
+        $link = createMySQLConnection();
+        $link->beginTransaction();
+        $query = 'DELETE FROM book WHERE ISBN = ?';
+        $stmt = $link->prepare($query);
+        $stmt->bindParam(1,$isbn);
+        if($stmt->execute()){
+            $link -> commit();
+            $result = 1;
+        }else{
+            $link -> rollBack();
+        }
+        $link =null;
+        return $result;
+    }
+?>

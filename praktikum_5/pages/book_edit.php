@@ -1,110 +1,136 @@
 <?php
-$editedIsbn = filter_input(INPUT_GET, 'bisbn');
-if (isset($editedIsbn)) {
-    $book = fetchOneBook($editedIsbn);
-    $genreName = fetchOneGenreName($editedIsbn);
-}
-
-$updatePressed = filter_input(INPUT_POST, 'btnUpdate');
-if (isset($updatePressed)) {
-    $isbn = filter_input(INPUT_POST, 'txtISBN');
-    $title = filter_input(INPUT_POST, 'txtTittle');
-    $author = filter_input(INPUT_POST, 'txtAuthor');
-    $publisher = filter_input(INPUT_POST, 'txtPublisher');
-    $publisheryear = filter_input(INPUT_POST, 'txtPublisherYear');
-    $shortdesc = filter_input(INPUT_POST, 'txtShortDescription');
-    $genrename = filter_input(INPUT_POST, 'genreName');
-
-    if (trim($isbn) == ' ' || trim($title) == ' ' || trim($author) == ' ' || trim($publisher) == ' ' || trim($publisheryear) == ' ' || trim($shortdesc) == ' ' || trim($genrename) == ' ') {
-        echo '<div> Please Provid with a valid name </div>';
-    } else {
-        $result = updateBookToDb($book['isbn'], $title, $author, $publisher, $publisheryear, $shortdesc, $genrename);
-        if ($result) {
-            header('location:index.php?menu=book');
-        } else {
-            echo '<div>Failed to update data</div>';
+    $editedISBN = filter_input(INPUT_GET,'isbn');
+    if(isset($editedISBN)){
+        $book = fetchOneBook($editedISBN);
+    }
+    $bookAwal = fetchJoinFromDb2();
+    $updatePressed = filter_input(INPUT_POST,'btnUpdate');
+    if(isset($updatePressed)){
+        $ISBN = filter_input(INPUT_POST,'ISBN');
+        $title = filter_input(INPUT_POST,'title');
+        $author = filter_input(INPUT_POST,'author');
+        $publisher = filter_input(INPUT_POST,'publisher');
+        $publishYear = filter_input(INPUT_POST,'publishYear');
+        $shortDesc = filter_input(INPUT_POST,'shortDesc');
+        $idGenre = filter_input(INPUT_POST,'idGenre');
+        if(trim($ISBN) == ''||trim($title) == ''||trim($author) == ''||trim($publisher) == ''||trim($shortDesc) == ''||trim($idGenre) == ''){
+            echo '
+            <div class="text-center">
+                Please provide with a valid name
+            </div>
+            ';}else{
+            $results = updateBookToDb($book['ISBN'],$title,$author,$publisher,$publishYear,$shortDesc,$idGenre);
+            if($results){
+                header('location:index.php?menu=book');
+            }else{
+                echo '
+                <div>
+                    Failed to add data
+                </div>
+            ';
+            }
         }
     }
-}
+
+    $changePressed = filter_input(INPUT_POST,'coverUpload');
+    if(isset($changePressed)){
+        $fileName = filter_input(INPUT_GET,'isbn');
+        $targetDir = 'uploads/';
+        $fileExtension = pathinfo($_FILES['txtFile']['name'],PATHINFO_EXTENSION);
+        $fileNameExtension=$fileName.'.'.$fileExtension;
+        $fileUploadPath = $targetDir.$fileName.'.'.$fileExtension;
+        if($_FILES['txtFile']['size']>1024*8192){
+            echo '<div>Uploaded file exceed 8MB</div>';
+        }
+        else{
+            move_uploaded_file($_FILES['txtFile']['tmp_name'],$fileUploadPath);
+            $results = updateCoverToDb($editedISBN,$fileNameExtension);
+            if($results){
+                header('location:index.php?menu=book');
+            }else{
+                echo '
+                            <div>
+                                Failed to add data
+                            </div>
+                        ';
+            }
+        }
+    }
 ?>
 
-<div class="container">
-    <form method="post">
-
-        <div class="row mt-2">
-            <label for="txtISBN" class="col-sm-3 col-form-label">
-                <h6>BOOK ISBN</h6>
-            </label>
-            <div class="">
-                <input type="text" name="txtISBN" id="txtISBN" class="form-control" value="<?php echo $book['isbn'];?>" readonly>
+<div class="container" style="height:auto">
+   <div class="row d-flex text-start justify-content-center my-3">
+        <div class="col-md-6">
+            <form method="post">
+            <div class="mb-3">
+                <label for="ISBNNum" class="form-label">ISBN</label>
+                <input type="text" class="form-control" name="ISBN" id="ISBNNum" maxlength="13" readonly value="<?php echo($book['ISBN']); ?>" placeholder="ISBN">
             </div>
-        </div>
-
-        <div class="row mt-2">
-            <label for="txtTittle" class="col-sm-3 col-form-label">
-                <h6>BOOK TITTLE</h6>
-            </label>
-            <div class="">
-                <input type="text" maxlength="45" placeholder="Book Tittle" required autofocus name="txtTittle" id="txtTittle" class="form-control" value="<?php echo $book['title'];?>">
+            <div class="mb-3">
+                <label for="bookTitle" class="form-label">Title</label>
+                <input type="text" class="form-control" name="title" id="bookTitle" maxlength="100" required autofocus value="<?php echo($book['title']); ?>" placeholder="Title">
             </div>
-        </div>
-
-        <div class="row mt-2">
-            <label for="txtAuthor" class="col-sm-3 col-form-label">
-                <h6>AUTHOR</h6>
-            </label>
-            <div class="">
-                <input type="text" maxlength="45" placeholder="Book Author" required autofocus name="txtAuthor" id="txtAuthor" class="form-control" value="<?php echo $book['author'];?>">
+            <div class="mb-3">
+                <label for="authorBook" class="form-label">Author</label>
+                <input type="text" class="form-control" name="author" id="authorBook" maxlength="100" required autofocus value="<?php echo($book['author']); ?>" placeholder="Author">
             </div>
-        </div>
-
-        <div class="row mt-2">
-            <label for="txtPublisher" class="col-sm-3 col-form-label">
-                <h6>PUBLISHER</h6>
-            </label>
-            <div class="">
-                <input type="text" maxlength="45" placeholder="Book Publisher" required autofocus name="txtPublisher" id="txtPublisher" class="form-control" value="<?php echo $book['publisher'];?>">
+            <div class="mb-3">
+                <label for="bookPublisher" class="form-label">Publisher</label>
+                <input type="text" class="form-control" name="publisher" id="bookPublisher" maxlength="100" required autofocus value="<?php echo($book['publisher']); ?>" placeholder="Publisher">
             </div>
-        </div>
-
-        <div class="row mt-2">
-            <label for="txtPublisherYear" class="col-sm-3 col-form-label">
-                <h6>PUBLISHER YEAR</h6>
-            </label>
-            <div class="">
-                <input type="text" maxlength="45" placeholder="Book Publihser Year" required autofocus name="txtPublisherYear" id="txtPublisherYear" class="form-control" value="<?php echo $book['publisher_year'];?>">
+            <div class="mb-3">
+                <label for="pubYear" class="form-label">Publish Year</label>
+                <input type="number" class="form-control" name="publishYear" id="pubYear"  required autofocus value="<?php echo($book['publish_year']); ?>" placeholder="Publish Year">
             </div>
-        </div>
-
-        <div class="row mt-2">
-            <label for="txtShortDescription" class="col-sm-3 col-form-label">
-                <h6>SHORT DESCRIPTION</h6>
-            </label>
-            <div class="">
-                <textarea name="txtShortDescription" id="txtShortDescription" cols="50" rows="3" class="form-control" required autofocus><?php echo $book['short_description'];?></textarea>
+            <div class="mb-3">
+                <label for="shortDesc" class="form-label">Short Description</label>
+                <textarea  rows="4" type="textarea" class="form-control" name="shortDesc" id="shortDesc" maxlength="300" required autofocus >
+                <?php echo($book['short_description']); ?>
+                </textarea>
             </div>
-        </div>
-
-        <div class="row mt-2">
-            <label for="genreName" class="col-sm-3 col-form-label">
-                <h6>GENRE NAME</h6>
-            </label>
-            <div class="">
-                <select required autofocus name="genreName" id="genreName">
-                    <option value="<?php echo $book['genre_id']; ?>" selected><?php echo $genreName['name']; ?></option>
-                    <?php
-                    $resultgenre = fetchGenreFromDb();
-                    foreach ($resultgenre as $genre) {
-                        echo '<option value="' . $genre['id'] . '">' .$genre['name'].'</option>';
+            <div class="mb-3">
+                <!-- <label for="IDgenre" class="form-label">Genre ID</label>
+                <input type="number" class="form-control" name="idGenre" id="idGenre" required autofocus value="<?php echo($book['genre_id']); ?>" min="1" max="10" step="1"> -->
+                <label for="IDgenre" class="form-label">Genre Name</label>
+                <select class="form-select" name="idGenre" aria-label="Default select example" required>
+                <?php
+                    $result = fetchGenreFromDb();
+                    foreach($result as $genre ){
+                        echo '<option value="'. $genre['id'].'"'. (($book["genre_id"] ==  $genre["id"])?'selected="selected"':"").'>'.$genre['name'].'</option>';
                     }
                     ?>
                 </select>
             </div>
-        </div>
+            <button type="submit" class="btn btn-primary" name="btnUpdate">Update Data</button>
+            
+            </form>
+            <div class="container" style="height:100vh">
+                <div class="row d-flex text-start justify-content-center my-3">
+                    <div class="col-md-6 text-center">
+                        <h1>Change Cover</h1>
+                        <?php
+                        if ($book['cover'] != '') {
+                            echo '<img class="rounded-3" src="uploads/' . $book['cover'] . '" style="width:100%;height:auto;max-width:500px;max-height:500px; text-align:center;">';
+                        }
+                        else{
+                            echo '<img class="rounded-3" src="uploads/default.jpg" style="width:100%;height:auto;max-width:500px;max-height:500px; text-align:center;">';
+                        }
+                        ?>
+                        <form method="post" enctype="multipart/form-data">
 
-        <div class="row mt-4">
-            <input type="submit" value="Update Data" name="btnUpdate" class="btn btn-primary">
-        </div>
+                            <div class="mb-3">
+                                <input type="file" class="form-control my-3" name="txtFile" accept="image/jpg">
+                            </div>
+                            <button type="submit" class="btn btn-dark w-100 text-warning" name="coverUpload">Change Cover</button>
 
-    </form>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        
+       
+    </div>
 </div>
