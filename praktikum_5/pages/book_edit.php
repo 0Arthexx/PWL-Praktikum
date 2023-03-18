@@ -10,7 +10,7 @@
         $title = filter_input(INPUT_POST,'title');
         $author = filter_input(INPUT_POST,'author');
         $publisher = filter_input(INPUT_POST,'publisher');
-        $publishYear = filter_input(INPUT_POST,'publishYear');
+        $yearPublished = filter_input(INPUT_POST,'yearPublished');
         $shortDesc = filter_input(INPUT_POST,'shortDesc');
         $idGenre = filter_input(INPUT_POST,'idGenre');
         if(trim($ISBN) == ''||trim($title) == ''||trim($author) == ''||trim($publisher) == ''||trim($shortDesc) == ''||trim($idGenre) == ''){
@@ -19,7 +19,7 @@
                 Please provide with a valid name
             </div>
             ';}else{
-            $results = updateBookToDb($book['ISBN'],$title,$author,$publisher,$publishYear,$shortDesc,$idGenre);
+            $results = updateBookToDb($book['ISBN'],$title,$author,$publisher,$yearPublished,$shortDesc,$idGenre);
             if($results){
                 header('location:index.php?menu=book');
             }else{
@@ -57,7 +57,6 @@
         }
     }
 ?>
-
 <div class="container" style="height:auto">
    <div class="row d-flex text-start justify-content-center my-3">
         <div class="col-md-6">
@@ -79,8 +78,8 @@
                 <input type="text" class="form-control" name="publisher" id="bookPublisher" maxlength="100" required autofocus value="<?php echo($book['publisher']); ?>" placeholder="Publisher">
             </div>
             <div class="mb-3">
-                <label for="pubYear" class="form-label">Publish Year</label>
-                <input type="number" class="form-control" name="publishYear" id="pubYear"  required autofocus value="<?php echo($book['publish_year']); ?>" placeholder="Publish Year">
+                <label for="pubYear" class="form-label">Year Published</label>
+                <input type="number" class="form-control" name="yearPublished" id="pubYear"  required autofocus value="<?php echo($book['publish_year']); ?>" placeholder="Year Published">
             </div>
             <div class="mb-3">
                 <label for="shortDesc" class="form-label">Short Description</label>

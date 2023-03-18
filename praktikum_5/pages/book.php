@@ -19,7 +19,7 @@ if(isset($submitPressed)){
     $title = filter_input(INPUT_POST,'title');
     $author = filter_input(INPUT_POST,'author');
     $publisher = filter_input(INPUT_POST,'publisher');
-    $publishYear = filter_input(INPUT_POST,'publishYear');
+    $yearPublished = filter_input(INPUT_POST,'yearPublished');
     $shortDesc = filter_input(INPUT_POST,'shortDesc');
     $cover = filter_input(INPUT_POST,'cover');
     $idGenre = filter_input(INPUT_POST,'idGenre');
@@ -30,7 +30,7 @@ if(isset($submitPressed)){
         </div>
         `;
     }else{
-        $results = addNewBook($ISBN,$title,$author,$publisher,$publishYear,$shortDesc,$idGenre);
+        $results = addNewBook($ISBN,$title,$author,$publisher,$yearPublished,$shortDesc,$idGenre);
     }
 }
 ?>
@@ -76,9 +76,9 @@ if(isset($submitPressed)){
         </div>
 
         <div class="row mt-2">
-            <label for="pubYear" class="form-label">Publish Year</label>
+            <label for="pubYear" class="form-label">Year Published</label>
             <div class="">
-                <input type="number" class="form-control" name="publishYear" id="pubYear"  required autofocus placeholder="Publish Year">
+                <input type="number" class="form-control" name="yearPublished" id="pubYear"  required autofocus placeholder="Year Published">
             </div>
         </div>
 
@@ -128,7 +128,7 @@ if(isset($submitPressed)){
             <th class="text-center">Title</th>
             <th class="text-center">Author</th>
             <th class="text-center">Publisher</th>
-            <th class="text-center">Publisher Year</th>
+            <th class="text-center">Year Published</th>
             <th class="text-center">Short Description</th>
             <th class="text-center">Genre Name</th>
             <th class="text-center">Action</th>
@@ -154,7 +154,6 @@ if(isset($submitPressed)){
             echo '<td>' . $book['name'] . '</td>';
             echo '<td>
                 <button onclick="editCover(\'' . $book['isbn'] . '\')" class="btn btn-success m-2">Change Cover</button>
-
                 <button onclick="editBook(\'' . $book['isbn'] . '\')" class="btn btn-warning m-2">Edit Book</button>
                 <button onclick="deleteBook(\'' . $book['isbn'] . '\')" class="btn btn-danger m-2">Delete Book</button>
                 </td>';
