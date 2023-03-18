@@ -31,5 +31,3 @@
    ```sh
    https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fxcrisarthur%2FPWL-Praktikum%2Ftree%2Fmain%2Fpraktikum_5
    ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
