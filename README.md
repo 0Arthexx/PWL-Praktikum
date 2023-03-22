@@ -38,9 +38,9 @@
    https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fxcrisarthur%2FPWL-Praktikum%2Ftree%2Fmain%2Fpraktikum_5
    ```
    
-4. Folder <i>**praktikum_6**</i> 
+4. Folder <i>**Praktikum_6**</i> 
    </br>
-   <a href="https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fxcrisarthur%2FPWL-Praktikum%2Ftree%2Fmain%2Fpraktikum_6" target="_blank">Download Here!</a>
+   <a href="https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fxcrisarthur%2FPWL-Praktikum%2Ftree%2Fmain%2FPraktikum_6" target="_blank">Download Here!</a>
    ```sh
-   https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fxcrisarthur%2FPWL-Praktikum%2Ftree%2Fmain%2Fpraktikum_5
+   https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Fxcrisarthur%2FPWL-Praktikum%2Ftree%2Fmain%2FPraktikum_6
    ```
