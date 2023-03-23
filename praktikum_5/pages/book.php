@@ -147,9 +147,9 @@ if(isset($submitPressed)){
             echo '<td >'. $book['title'] . '</td>';
             echo '<td>'. $book['author'] . '</td>';
             echo '<td>'. $book['publisher'] . '</td>';
-            echo '<td>'. $book['year_published'] . '</td>';
+            echo '<td>'. $book['publisher_year'] . '</td>';
             echo '<td>' . $book['short_description'] . '</td>';
-            echo '<td>' . $book['name'] . '</td>';
+            echo '<td>' . $book['title'] . '</td>';
             echo '<td>
                 <button onclick="editCover(\'' . $book['isbn'] . '\')" class="btn btn-success m-2">Change Cover</button>
                 <button onclick="editBook(\'' . $book['isbn'] . '\')" class="btn btn-warning m-2">Edit Book</button>

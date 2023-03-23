@@ -1,7 +1,7 @@
 <?php 
     function fetchJoinFromDb(){
         $link = createMySQLConnection();
-        $query = 'SELECT b.isbn, b.cover, b.title, b.author, b.publisher, b.year_published, b.short_description, g.name FROM book b JOIN genre g ON b.genre_id = g.id';
+        $query = "SELECT isbn,cover,title,author,publisher,publisher_year,short_description,genre.name AS 'nama_genre' FROM book INNER JOIN genre WHERE book.genre_id = genre.id;";
         $stmt = $link->prepare($query);
         $stmt->execute();
         $results = $stmt->fetchAll();
@@ -28,7 +28,7 @@
     }
     function fetchOneBook($isbn){
         $link = createMySQLConnection();
-        $query = "SELECT ISBN,cover,title,author,publisher,year_published,short_description,genre_id  FROM book WHERE ISBN = ?;";
+        $query = "SELECT ISBN,cover,title,author,publisher,publisher_year,short_description,genre_id  FROM book WHERE ISBN = ?;";
         $stmt = $link->prepare($query);
         $stmt->bindParam(1,$isbn);
         $stmt->execute();
@@ -38,7 +38,7 @@
     }
     function fetchJoinFromDb2(){
         $link = createMySQLConnection();
-        $query = "SELECT ISBN,cover,title,author,publisher,year_published,genre.name AS 'nama_genre' FROM book INNER JOIN genre WHERE book.genre_id = genre.id AND ISBN = ?;";
+        $query = "SELECT ISBN,cover,title,author,publisher,publisher_year,genre.name AS 'nama_genre' FROM book INNER JOIN genre WHERE book.genre_id = genre.id AND ISBN = ?;";
         $stmt = $link->prepare($query);
         $stmt->bindParam(1,$isbna);
         $stmt->execute();
@@ -59,7 +59,7 @@
         $result = 0;
         $link = createMySQLConnection();
         $link -> beginTransaction();
-        $query = 'INSERT INTO book(ISBN,title,author,publisher,year_published,short_description,genre_id) VALUES (?,?,?,?,?,?,?)';
+        $query = 'INSERT INTO book(ISBN,title,author,publisher,publisher_year,short_description,genre_id) VALUES (?,?,?,?,?,?,?)';
         $stmt = $link->prepare($query);
         $stmt->bindParam(1,$newISBN,PDO::PARAM_STR);
         $stmt->bindParam(2,$newTitle,PDO::PARAM_STR);
@@ -81,7 +81,7 @@
         $result = 0;
         $link = createMySQLConnection();
         $link -> beginTransaction();
-        $query = 'UPDATE book SET title = ?,author = ?,publisher = ?,year_published = ?,short_description = ?,genre_id = ? WHERE ISBN = ?';
+        $query = 'UPDATE book SET title = ?,author = ?,publisher = ?,publisher_year = ?,short_description = ?,genre_id = ? WHERE ISBN = ?';
         $stmt = $link->prepare($query);
         $stmt->bindParam(1,$newTitle,PDO::PARAM_STR);
         $stmt->bindParam(2,$newAuthor,PDO::PARAM_STR);

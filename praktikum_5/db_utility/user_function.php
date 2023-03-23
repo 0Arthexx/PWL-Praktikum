@@ -6,8 +6,8 @@
         $stmt->bindParam(1,$email);
         $stmt->bindParam(2,$password);
         $stmt->execute();
-        $user = $stmt->fetch();
+        $result = $stmt->fetch();
         $link = null;
-        return $user;
+        return $result;
     }
 ?>
