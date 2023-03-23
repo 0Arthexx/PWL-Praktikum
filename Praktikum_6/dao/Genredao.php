@@ -10,7 +10,7 @@ class Genredao
     public function fetchGenreFromDb()
     {
         $link = PDOUtil::createMySQLConnection();
-        $query = "SELECT id,name FROM genre";
+        $query = "SELECT id, name FROM genre";
         $stmt = $link->prepare($query);
         $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, 'entity\Genre');
         $stmt->execute();
@@ -43,7 +43,7 @@ class Genredao
         $stmt->bindParam(1,$id);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
         $stmt->execute();
-        $genre = $stmt->fetch();
+        $genre = $stmt->fetchObject(Genre::class);
         $link =null;
         return $genre;
     }

@@ -1,5 +1,7 @@
 <?php
 $genreDao = new \dao\Genredao();
+//$genres = $genreDao->fetchGenreFromDb();
+//var_dump($genres);
 
 $deleteCommand = filter_input(INPUT_GET,'cmd');
 if(isset($deleteCommand) && $deleteCommand = 'del'){
@@ -16,12 +18,11 @@ $submitPressed = filter_input(INPUT_POST, 'btnSave');
 if (isset($submitPressed)) {
     $name = filter_input(INPUT_POST, 'txtName');
     if (trim($name) == '') {
-        $genre = new \entity\Genre();
-        $genre -> setName($name);
-        $results = $genreDao->addNewGenre($genre);
         echo '<div>Please provide with a valid name</div>';
     } else {
-        $results = $genreDao->addNewGenre($name);
+        $genre = new \entity\Genre();
+        $genre->setName($name);
+        $results = $genreDao->addNewGenre($genre);
         if ($results) {
             echo '<div>Data sucefully added</div>';
         } else {
@@ -61,9 +62,9 @@ if (isset($submitPressed)) {
         </thead>
         <tbody>
         <?php
-        $results = $genreDao->fetchGenreFromDb();
-        /** @var $genre \entity\Genre */
-        foreach ($results as $genre) {
+        $genres = $genreDao->fetchGenreFromDb();
+        /** @var \entity\Genre $genre */
+        foreach ($genres as $genre) {
             echo '<tr>';
             echo '<td>' . $genre->getId() . '</td>';
             echo '<td>' . $genre->getName() . '</td>';

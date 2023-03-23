@@ -80,7 +80,7 @@
             </div>
             <div class="mb-3">
                 <label for="pubYear" class="form-label">Year Published</label>
-                <input type="number" class="form-control" name="yearPublished" id="pubYear"  required autofocus value="<?php echo($book['year_published']); ?>" placeholder="Publish Year">
+                <input type="number" class="form-control" name="yearPublished" id="pubYear"  required autofocus value="<?php echo($book['publisher_year']); ?>" placeholder="Publisher Year">
             </div>
             <div class="mb-3">
                 <label for="shortDesc" class="form-label">Short Description</label>

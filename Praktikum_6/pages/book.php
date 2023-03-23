@@ -3,7 +3,10 @@ $deletecmd = filter_input(INPUT_GET,'comd');
 if(isset($deletecmd) && $deletecmd = 'dele'){
     $ISBNdel = filter_input(INPUT_GET,'idb');
     $book=fetchOneBook($ISBNdel);
-    unlink('uploads/'.$book['cover']);
+    if (file_exists('uploads/'.$book['cover'])) {
+        unlink('uploads/'.$book['cover']);
+    }
+
     $results =deleteBookFromDb($ISBNdel);
     if($results){
         echo '<div>Data successfully removed</div>';
@@ -90,12 +93,12 @@ if(isset($submitPressed)){
             </div>
         </div>
 
-        <div class="row mt-2">
-            <label for="cover" class="form-label">Cover</label>
-            <div class="">
-                <input type="text" class="form-control" name="cover" id="cover" maxlength="100"  autofocus placeholder="Cover">
-            </div>
-        </div>
+<!--        <div class="row mt-2">-->
+<!--            <label for="cover" class="form-label">Cover</label>-->
+<!--            <div class="">-->
+<!--                <input type="text" class="form-control" name="cover" id="cover" maxlength="100"  autofocus placeholder="Cover">-->
+<!--            </div>-->
+<!--        </div>-->
 
         <div class="row mt-2">
             <label for="IDgenre" class="form-label">Genre Name</label>
@@ -147,9 +150,9 @@ if(isset($submitPressed)){
             echo '<td >'. $book['title'] . '</td>';
             echo '<td>'. $book['author'] . '</td>';
             echo '<td>'. $book['publisher'] . '</td>';
-            echo '<td>'. $book['year_published'] . '</td>';
+            echo '<td>'. $book['publisher_year'] . '</td>';
             echo '<td>' . $book['short_description'] . '</td>';
-            echo '<td>' . $book['name'] . '</td>';
+            echo '<td>' . $book['nama_genre'] . '</td>';
             echo '<td>
                 <button onclick="editCover(\'' . $book['isbn'] . '\')" class="btn btn-success m-2">Change Cover</button>
                 <button onclick="editBook(\'' . $book['isbn'] . '\')" class="btn btn-warning m-2">Edit Book</button>

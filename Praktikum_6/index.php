@@ -1,24 +1,23 @@
 <!--Kelompok-->
 <!-- 2172021 Tabitha Emmanuella Kotambunan -->
 <!-- 2172023 Willyandie Saputra -->
-<!-- 2172027j Cristianto Tri Arthurito -->
+<!-- 2172027 Cristianto Tri Arthurito -->
 
 <?php
-//  session_start();
-//  if(!isset($_SESSION['registered_user'])){
-//    $_SESSION['registered_user'] = false;
-//  }
+  session_start();
+  if(!isset($_SESSION['registered_user'])){
+    $_SESSION['registered_user'] = false;
+  }
   include_once 'db_utility/util_function.php';
 //  include_once 'db_utility/genre_function.php';
   include_once 'db_utility/book_function.php';
 //  include_once 'db_utility/user_function.php';
-
-include_once 'entity/User.php';
-include_once 'entity/Genre.php';
-
-include_once 'dao/PDOUtil.php';
-include_once 'dao/UserDao.php';
-include_once 'dao/Genredao.php';
+  include_once 'entity/Genre.php';
+  include_once 'entity/User.php';
+  include_once 'entity/Book.php';
+  include_once 'dao/PDOUtil.php';
+  include_once 'dao/UserDao.php';
+  include_once 'dao/Genredao.php';
 ?>
 
 <!DOCTYPE html>
@@ -47,9 +46,9 @@ include_once 'dao/Genredao.php';
 
   </style>
     <section class="backg text-white">
-<!--      --><?php
-//        if ($_SESSION['registered_user']){
-//      ?>
+      <?php
+        if ($_SESSION['registered_user']) {
+      ?>
 
         <nav class="navbar navbar-expand-lg sticky-top warna">
             <div class="container-fluid m-2">
@@ -111,15 +110,14 @@ include_once 'dao/Genredao.php';
         }
         ?>
     </main>
-<!--    --><?php
-//    }else{
-//      include_once('pages/login.php');
-//
-//    }
-//    ?>
+    <?php
+    } else{
+      include_once('pages/login.php');
+
+    }
+    ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    
     <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap5.min.js"></script>
     <script>

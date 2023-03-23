@@ -1,20 +1,20 @@
 <?php
-$userDao = new \dao\UseerDao();
+    $userDao = new \dao\UserDao();
+
     $loginPressed = filter_input(INPUT_POST,'btnLogin');
     if(isset($loginPressed)){
-        $email = filter_input(INPUT_POST,'email');
-        $password = filter_input(INPUT_POST,'password');
+        $email = filter_input(INPUT_POST,'txtEmail');
+        $password = filter_input(INPUT_POST,'txtPassword');
         if(trim($email) == ''||trim($password) == ''){
             echo '<div>Please input your email and password!</div>';
         }else{
-            /** @var  $user \entity\User */
             $user = $userDao->login($email, $password);
-            if($user->getEmail() == $email){
+            if(!$user){
+                echo '<div>Invalid email or password</div>';
+            } else if($user->getEmail() == $email){
                 $_SESSION['registered_user'] = true;
                 $_SESSION['registered_name'] = $user->getName();
                 header('location:index.php');
-            }else{
-                echo '<div>Invalid email or password</div>';
             }
         }
     }
@@ -102,27 +102,6 @@ $userDao = new \dao\UseerDao();
 
 </style>
 
-<?php
-$loginPressed = filter_input(INPUT_POST, 'btnLogin');
-if(isset($loginPressed)) {
-    $email = filter_input(INPUT_POST, 'txtEmail');
-    $password = filter_input(INPUT_POST, 'txtPassword');
-    if (trim($email) == '' || trim($password) == '') {
-        echo '<div>Please input Your email And funcion' ;
-    } else {
-        $user = login($email, $password);
-        if ($user['email'] == $email) {
-            $_SESSION['registered_user'] = true;
-            $_SESSION['registered_user'] = $user['name'];
-            header('location:index.php');
-
-        } else {
-            echo '<div>Invalid Email or Password</div>';
-        }
-    }
-}
-
-?>
 <form action="" method="post">
     <div class="card m-auto">
         <h4 class="title">Log In!</h4>
